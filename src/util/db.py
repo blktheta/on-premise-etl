@@ -18,7 +18,7 @@ PORT = os.environ.get('PORT')
 DBNAME = os.environ.get('DBNAME')
 
 
-class PgConn:
+class DatabaseConnection:
     """Connect to a PostgreSQL database."""
 
     def __init__(
@@ -63,26 +63,66 @@ class PgConn:
             _conn.close()
 
     def query(self, db_query: str) -> None:
-        """Query into a PostgreSQL database."""
+        """Query into a PostgreSQL database.
+
+        Keyword arguments:
+            db_query -- sql query to be executed.
+        """
         with self.cursor() as cur:
             cur.execute(db_query)
 
     def query_file(self, file_path: str) -> None:
-        """Query from file into a PostgreSQL database."""
-        self.query(open(file_path, mode='r', encoding='utf-8').read())
+        """Query from file into a PostgreSQL database.
+
+        Keyword arguments:
+            file_path -- relative path to a sql file.
+        """
+        with open(file_path, mode='r', encoding='utf-8') as query:
+            self.query(query.read())
 
     def fetch(self, db_query: str) -> pd.DataFrame:
-        """Fetch data from a PostgreSQL database in a Pandas dataframe."""
+        """Fetch data from a PostgreSQL database.
+
+        Keyword arguments:
+            db_query -- sql query to be executed.
+        Yields:
+            pd.DataFrame -- data is stored in a Pandas dataframe.
+        """
         return pd.read_sql_query(db_query, self._engine.connect())
+
+    def fetch_file(self, file_path: str) -> pd.DataFrame:
+        """Fetch data from a PostgreSQL database with a sql file.
+
+        Keyword arguments:
+            file_path -- relative path to a sql file.
+        Yields:
+            pd.Dataframe -- data is stored in a Pandas dataframe.
+        """
+        with open(file_path, mode='r', encoding='utf-8') as query:
+            return self.fetch(query.read())
 
     def __str__(self) -> str:
         """Return connectiong string URI."""
         return f'{self._uri}'
 
+# TODO:
 
-if __name__ == '__main__':
+    def switch_db(self) -> None:
+        """Rename the connection str to PostgreSQL database."""
+        pass
+
+    def fetch_table(self, table: str) -> pd.DataFrame:
+        """Fetch table data from connected databse.
+
+        Yields:
+            pd.Dataframe -- data is stored in a Pandas dataframe.
+        """
+        pass
+
+
+if __name__ == "__main__":
     # Display the PostgreSQL database server version
-    db = PgConn()
+    db = DatabaseConnection()
     with db.cursor() as cur:
         cur.execute("""SELECT version();""")
         db_version = cur.fetchone()
