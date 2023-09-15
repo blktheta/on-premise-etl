@@ -56,7 +56,54 @@ The following images below showcase the transformation of the dataset from an OL
 <p align="center"><img src="https://github.com/blktheta/on-premise-etl/blob/main/media/starschema.png"></p>
 
 ## 🔧 Usage
-Usage description.
+Create a new database and restore the backup database `after_filmrental.tar` into it. 
+```bash
+pg_restore -U username -d dbname path/to/after_filmrental.tar
+```
+Or, restore `before_filmrental.tar` backup and apply the `SQL` transformations by running this command in psql.
+```postgresql
+\i path/to/src/sql/staging.sql
+```
+ Navigate to the **src/util** directory in the terminal and activate a Python interactive session. 
+ ```bash
+cd path/to/src/util
+python3
+```
+
+Now you can access the fact tables and fact views using `SQL` and save them into a `Pandas` dataframe for examination.
+```python
+>>> from db import DatabaseConnection
+>>> db = DatabaseConnection()
+>>> df = db.fetch("""SELECT category, amount FROM fact.sales_master;""")  # Fetch data from Fact View table 
+>>> df2 = df.groupby('category', as_index=False).sum().sort_vales('amount)
+>>> df2
+       category   amount
+11        Music  3071.52
+15       Travel  3227.36
+2      Children  3309.39
+3      Classics  3353.38
+10       Horror  3401.27
+5   Documentary  3749.65
+7        Family  3830.15
+9         Games  3922.18
+8       Foreign  3934.47
+0        Action  3951.84
+12          New  3966.38
+4        Comedy  4002.48
+6         Drama  4118.46
+1     Animation  4245.31
+13       Sci-Fi  4336.01
+14       Sports  4892.19
+```
+
+If `Matplotlib` is imported creating figures from the data can be accomplished quickly.
+```python
+>>> from matplotlib.pyplot as plt
+>>> fig, ax = plt.subplots()
+>>> ax.pie(df2['amount'], labels=df2['category'], autopct='%1.1f%%')
+>>> plt.show()
+```
+
 
 ## ⭐️ Project assistance
 If you want to say **thank you** or/and support a lone developers journey:
