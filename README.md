@@ -13,7 +13,7 @@
 A basic On-Premise ETL pipeline showcasing Python/SQL best practices and fundamental knowledge on dimensional modeling. The project currently make use of a small dataset in order to showcase the necessary steps taken when preparing data. 
 
 The infrastructre of the project can be seen below. This project is meant to showcase each step of the cycle, all the way from the initial extraction of the data to the business report. Including data from different sources.
-<p align="center"><i>Placeholder img showcasing ETL cycle made by Blktheta.</i></p>
+<p align="center"><i>Image showcasing ETL cycle made by Blktheta. (Placeholder)</i></p>
 <p align="center"><img src="https://github.com/blktheta/on-premise-etl/blob/main/media/etlcycle.jpeg"></p>
 
 ## ⚡️ Getting started
@@ -50,9 +50,9 @@ The project is built based on star schema with fact tables at the center surroun
 4. **Identify facts** – The forth step is to identify carefully which facts will appear in the fact table.
 
 The following images below showcase the transformation of the dataset from an OLTP or source source system to OLAP or data warehouse.
-<p align="center"><i>Entity relationship diagram showcasing the business of a film rental store.</i></p>
+<p align="center"><i>Entity relationship diagram showcasing the business of a film rental store. (Placeholder)</i></p>
 <p align="center"><img src="https://github.com/blktheta/on-premise-etl/blob/main/media/entityrelationship.png"></p>
-<p align="center"><i>Transactional and accumulating fact tables showcasing how measurements are recorded.</i></p>
+<p align="center"><i>Transactional and accumulating fact tables showcasing how measurements are recorded. (Placeholder)</i></p>
 <p align="center"><img src="https://github.com/blktheta/on-premise-etl/blob/main/media/starschema.png"></p>
 
 ## 🔧 Usage
@@ -103,7 +103,8 @@ If `Matplotlib` is imported creating figures from the data can be accomplished q
 >>> ax.pie(df2['amount'], labels=df2['category'], autopct='%1.1f%%')
 >>> plt.show()
 ```
-
+<p align="center"><i>Figure 1. Pie chart summary of sales for each film category. (Placeholder)</i></p>
+<p align="center"><img src="https://github.com/blktheta/on-premise-etl/blob/main/media/Figure_1.png"></p>
 
 ## ⭐️ Project assistance
 If you want to say **thank you** or/and support a lone developers journey:
